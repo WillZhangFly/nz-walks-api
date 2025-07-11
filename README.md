@@ -31,7 +31,7 @@ A RESTful API for managing walking trails in New Zealand, built with ASP.NET Cor
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/nz-walks-api.git
+git clone https://github.com/WillZhangFly/nz-walks-api.git
 cd nz-walks-api
 ```
 
@@ -122,4 +122,4 @@ This project is licensed under the MIT License.
 
 ## Author
 
-Will Zhang - [GitHub Profile](https://github.com/yourusername)
+Will Zhang - [GitHub Profile](https://github.com/WillZhangFly)
