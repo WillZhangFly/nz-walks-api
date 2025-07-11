@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Custom Rules" Description="Custom analyzer rules for NZWalks project" ToolsVersion="16.0">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <!-- Enable important formatting rules -->
+    <Rule Id="IDE0055" Action="Warning" />    <!-- Fix formatting -->
+    <Rule Id="IDE0036" Action="Info" />       <!-- Order modifiers -->
+    <Rule Id="IDE0040" Action="Info" />       <!-- Add accessibility modifiers -->
+    <Rule Id="IDE0049" Action="Info" />       <!-- Use language keywords -->
+  </Rules>
+
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- Documentation rules -->
+    <Rule Id="SA1633" Action="None" />        <!-- File header -->
+    <Rule Id="SA1652" Action="None" />        <!-- Enable XML documentation output -->
+    <Rule Id="SA1600" Action="Info" />        <!-- Elements should be documented -->
+
+    <!-- Spacing rules -->
+    <Rule Id="SA1000" Action="Warning" />     <!-- Keywords should be spaced correctly -->
+    <Rule Id="SA1003" Action="Warning" />     <!-- Symbols should be spaced correctly -->
+    <Rule Id="SA1008" Action="Warning" />     <!-- Opening parenthesis should be spaced correctly -->
+
+    <!-- Readability rules -->
+    <Rule Id="SA1101" Action="None" />        <!-- Prefix local calls with this -->
+    <Rule Id="SA1309" Action="None" />        <!-- Field names should not begin with underscore -->
+    <Rule Id="SA1413" Action="Warning" />     <!-- Use trailing comma in multi-line initializers -->
+  </Rules>
+</RuleSet>
