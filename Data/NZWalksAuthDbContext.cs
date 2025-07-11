@@ -24,7 +24,7 @@ public class NZWalksAuthDbContext : IdentityDbContext
                 Id = readerId.ToString(),
                 ConcurrencyStamp = readerId.ToString(),
                 Name = "Reader",
-                NormalizedName = "READER
+                NormalizedName = "READER"
          },
             new IdentityRole {
                 Id = writerId.ToString(),
