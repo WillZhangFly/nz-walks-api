@@ -21,7 +21,7 @@ public class SQLWalkRepository : IWalkRepository
         return walk;
     }
 
-    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, string? sortOrder = null)
     {
         // return await dbContext.Walks.Include(x => x.Difficulty).Include(x => x.Region).ToListAsync();
         var walks = dbContext.Walks.Include(x => x.Difficulty).Include(x => x.Region).AsQueryable();
@@ -32,6 +32,22 @@ public class SQLWalkRepository : IWalkRepository
             {
                 walks = walks.Where(x => x.Name.Contains(filterQuery));
             }
+        }
+
+        // Apply sorting if specified
+        if (!string.IsNullOrWhiteSpace(sortBy) && !string.IsNullOrWhiteSpace(sortOrder))
+        {
+            var isAscending = sortOrder.Equals("asc", StringComparison.OrdinalIgnoreCase);
+
+            walks = sortBy.ToLower() switch
+            {
+                "name" => isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name),
+                "description" => isAscending ? walks.OrderBy(x => x.Description) : walks.OrderByDescending(x => x.Description),
+                "lengthinkm" or "length" => isAscending ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm),
+                "region" => isAscending ? walks.OrderBy(x => x.Region.Name) : walks.OrderByDescending(x => x.Region.Name),
+                "difficulty" => isAscending ? walks.OrderBy(x => x.Difficulty.Name) : walks.OrderByDescending(x => x.Difficulty.Name),
+                _ => walks // Default: no sorting if sortBy field is not recognized
+            };
         }
 
         return await walks.ToListAsync();
