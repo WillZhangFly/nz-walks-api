@@ -46,5 +46,25 @@ namespace NZWalks.Controllers
 
             return BadRequest(new { message = "User registration failed", errors = identityResult.Errors.Select(e => e.Description) });
         }
+
+        // POST: api/auth/login
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+        {
+            var user = await userManager.FindByEmailAsync(request.Username);
+
+            if (user != null)
+            {
+                var passwordCheck = await userManager.CheckPasswordAsync(user, request.Password);
+                if (passwordCheck)
+                {
+                    // create a token or session here
+                    return Ok(new { message = "Login successful" });
+                }
+            }
+
+            return BadRequest(new { message = "Invalid username or password" });
+         }
     }
 }
