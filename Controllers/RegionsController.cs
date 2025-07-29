@@ -14,7 +14,6 @@ namespace NZWalks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -29,6 +28,7 @@ namespace NZWalks.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             // Get Data from  the Database - Domain Model
@@ -42,6 +42,7 @@ namespace NZWalks.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             // get region domain model from the database
@@ -59,6 +60,7 @@ namespace NZWalks.Controllers
         // post to create a new region
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // Map DTO to Domain Model
@@ -78,6 +80,7 @@ namespace NZWalks.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
@@ -98,6 +101,7 @@ namespace NZWalks.Controllers
         // DELETE: https://localhost:5001/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
@@ -114,6 +118,7 @@ namespace NZWalks.Controllers
         // DELETE: https://localhost:5001/api/regions/all
         [HttpDelete]
         [Route("all")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteAll()
         {
             // Get all regions first to check if any exist
