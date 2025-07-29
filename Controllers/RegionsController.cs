@@ -104,6 +104,7 @@ namespace NZWalks.Controllers
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
+
             var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
 
             if (regionDomainModel == null)
@@ -111,14 +112,17 @@ namespace NZWalks.Controllers
                 return NotFound($"Region with ID {id} not found");
             }
 
-            return Ok(); // 204 No Content response
+            dbContext.Regions.Remove(regionDomainModel);
+            await dbContext.SaveChangesAsync();
+
+            return Ok($"Successfully deleted the region with ID {id}"); // 204 No Content response
         }
 
         // Delete all regions
         // DELETE: https://localhost:5001/api/regions/all
         [HttpDelete]
         [Route("all")]
-        [Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Writer, Reader")]
         public async Task<IActionResult> DeleteAll()
         {
             // Get all regions first to check if any exist
