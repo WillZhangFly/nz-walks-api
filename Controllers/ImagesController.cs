@@ -21,7 +21,17 @@ namespace NZWalks.Controllers
             }
             else
             {
-                //user repository to save the image
+                // convert dto to domain model
+                var imageDomainModel = new Image
+                {
+                    File = request.File,
+                    FileExtension = Path.GetExtension(request.File.FileName).ToLower(),
+                    FileSizeInBytes = request.File.Length,
+                    FileName = request.File.FileName,
+                    FileDescription = request.FileDescription,
+                };
+
+
             }
 
         }
