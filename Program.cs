@@ -12,7 +12,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logger = new LoggerConfiguration().WriteTo.Console().MinimumLevel
+var logger = new LoggerConfiguration()
+   .WriteTo.Console()
+   .WriteTo.File("Logs/NzWalks_log.txt", rollingInterval: RollingInterval.Minute)
+   .MinimumLevel
    .Warning().CreateLogger();
 
 builder.Logging.ClearProviders();
