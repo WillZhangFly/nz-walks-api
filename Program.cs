@@ -13,7 +13,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration().WriteTo.Console().MinimumLevel
-   .Information().CreateLogger();
+   .Warning().CreateLogger();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);

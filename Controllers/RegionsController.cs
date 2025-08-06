@@ -38,17 +38,25 @@ namespace NZWalks.Controllers
         // [Authorize(Roles = "Reader, Writer")]
         public async Task<IActionResult> GetAll()
         {
-            logger.LogInformation("Fetching all regions from the database");
+            try
+            {
+                // Get Data from  the Database - Domain Model
+                var regionsDomain = await regionRepository.GetAllAsync();
 
-            // Get Data from  the Database - Domain Model
-            var regionsDomain = await regionRepository.GetAllAsync();
+                logger.LogInformation($"Found {JsonSerializer.Serialize(regionsDomain)} regions");
 
-            logger.LogInformation($"Found {JsonSerializer.Serialize(regionsDomain)} regions");
+                var regionsDto = mapper.Map<List<RegionsDto>>(regionsDomain);
 
-            var regionsDto = mapper.Map<List<RegionsDto>>(regionsDomain);
+                // return DTOs
+                return Ok(regionsDto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while fetching regions");
+                return StatusCode(500, "Internal server error");
+            }
 
-            // return DTOs
-            return Ok(regionsDto);
+
         }
 
         [HttpGet]
