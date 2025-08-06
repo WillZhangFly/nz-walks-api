@@ -40,6 +40,7 @@ namespace NZWalks.Controllers
         {
             try
             {
+                throw new Exception("This is an custom testing exception");
                 // Get Data from  the Database - Domain Model
                 var regionsDomain = await regionRepository.GetAllAsync();
 
