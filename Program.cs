@@ -9,6 +9,7 @@ using NZWalks.Repositories;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
+using NZWalks.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -134,6 +135,8 @@ else
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "NZ Walks API V1");
     });
 }
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseRouting();
